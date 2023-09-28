@@ -1,9 +1,11 @@
 "use client";
 
+import { Ingredient } from "@prisma/client";
 import React from "react";
 import { useRef } from "react";
+import IngredientForm from "./IngredientForm";
 
-export default function RecipeForm(props: { ingredients: Object[] }) {
+export default function RecipeForm(props: { ingredients: Ingredient[] }) {
   const nameInputRef = useRef(null);
   const prepTimeInputRef = useRef(null);
   const descriptionInputRef = useRef(null);
@@ -28,6 +30,7 @@ export default function RecipeForm(props: { ingredients: Object[] }) {
           <label htmlFor="instructions">Instructions</label>
           <textarea id="instructions" ref={instructionsInputRef} />
         </div>
+        <IngredientForm ingredients={props.ingredients} />
       </form>
     </div>
   )
