@@ -1,6 +1,6 @@
 import React from "react";
 import prisma from "@/lib/prisma";
-import RecipeForm from "@/app/components/RecipeForm";
+import RecipeForm from "@/components/RecipeForm";
 
 export default async function NewRecipe() {
   const ingredients = await prisma.ingredient.findMany({
