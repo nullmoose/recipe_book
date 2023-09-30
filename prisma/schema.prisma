@@ -31,5 +31,6 @@ model RecipeIngredients {
   recipeId Int
   ingredient Ingredient @relation(fields: [ingredientId], references: [id])
   ingredientId Int
-  quantity String
+  quantity Float?
+  quantityType String?
 }

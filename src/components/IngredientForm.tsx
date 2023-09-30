@@ -6,15 +6,19 @@ import { useState, useRef } from "react";
 
 export default function IngredientForm(props: { ingredients: Ingredient[] }) {
   const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [availableIngredients, setAvailableIngredients] = useState(props.ingredients);
   const ingredientsSelectRef = useRef(null);
 
   function selectHandler() {
-    const selectedIngredient = props.ingredients.find(function(ingredient) {
-      return ingredient.id.toString() == ingredientsSelectRef.current.value
-    })
+    const selectedIndex = availableIngredients.findIndex(
+      ingredient => ingredient.id.toString() === ingredientsSelectRef.current.value
+    )
 
-    if (selectedIngredient) {
+    if (selectedIndex >= 0) {
+      const selectedIngredient = availableIngredients[selectedIndex]
       setSelectedIngredients([...selectedIngredients, selectedIngredient])
+      availableIngredients.splice(selectedIndex, 1)
+      setAvailableIngredients([...availableIngredients]);
     }
   }
 
@@ -23,12 +27,12 @@ export default function IngredientForm(props: { ingredients: Ingredient[] }) {
       <label htmlFor="ingredients">Ingredients</label>
       <select defaultValue="default" id="ingredients" onChange={selectHandler} ref={ingredientsSelectRef}>
         <option value="default" disabled>Select an ingredient</option>
-        {props.ingredients.map((ingredient) => (
+        {availableIngredients.map((ingredient) => (
           <option key={ingredient.id} value={ingredient.id}>{ingredient.name}</option>
         ))}
       </select>
       <div>
-        {selectedIngredients.map((ingredient) => (
+        {selectedIngredients.map((ingredient: Ingredient) => (
           <p>{ingredient.name}</p>
         ))}
       </div>
