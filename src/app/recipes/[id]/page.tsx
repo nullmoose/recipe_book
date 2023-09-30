@@ -5,14 +5,14 @@ import RecipeSerializer from "@/serializers/RecipeSerializer";
 
 export default async function Recipe({ params }: { params: { id: string } }) {
   const id = Number(params.id)
-  let recipe = await prisma.recipe.findUnique({
+  const rawRecipe = await prisma.recipe.findUnique({
     where: { id: id },
     include: { ingredients: { include: { ingredient: true } } },
   })
 
-  if (!recipe) { notFound() }
+  if (!rawRecipe) { notFound() }
 
-  recipe = RecipeSerializer(recipe)
+  const recipe = RecipeSerializer(rawRecipe)
 
   return (
     <div>

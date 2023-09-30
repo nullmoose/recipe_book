@@ -5,13 +5,14 @@ import { Ingredient } from "@prisma/client";
 import { useState, useRef } from "react";
 
 export default function IngredientForm(props: { ingredients: Ingredient[] }) {
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const initialSelectedIngredients : Ingredient[] = []
+  const [selectedIngredients, setSelectedIngredients] = useState(initialSelectedIngredients);
   const [availableIngredients, setAvailableIngredients] = useState(props.ingredients);
-  const ingredientsSelectRef = useRef(null);
+  const ingredientsSelectRef = useRef<HTMLSelectElement>(null);
 
   function selectHandler() {
     const selectedIndex = availableIngredients.findIndex(
-      ingredient => ingredient.id.toString() === ingredientsSelectRef.current.value
+      ingredient => ingredient.id.toString() === ingredientsSelectRef.current?.value
     )
 
     if (selectedIndex >= 0) {
